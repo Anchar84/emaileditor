@@ -1,0 +1,25 @@
+.panel {
+    background-color: #f5f5f5;
+    padding: 50px 50px 40px 50px;
+    font: 14px OpenSans, Arial, Helvetica, sans-serif;
+}
+
+.panel h2 {
+    font-size: 20px;
+    font-weight: normal;
+    margin: 0 0 8px 0;
+}
+
+.panel .emailsField {
+    background-color: #ffffff;
+    width: 100%;
+    min-height: 200px;
+    border-top: 1px solid #cccccc;
+    padding: 7px 4px 3px 6px;
+}
+
+.panel input[type="text"] {
+    border: 0px;
+    font-size: inherit !important;
+    outline: none;
+}
