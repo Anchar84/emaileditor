@@ -57,13 +57,21 @@ class EmailValue extends Component {
         this.setState({editing: false})
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.textInput) {
+            this.textInput.focus();
+        }
+    }
+
     render() {
         let editing = this.state && this.state.editing;
         let value = this.state && this.state.email || this.props.email;
         if (editing) {
             return <span className="editEmail" key={this.props.index}
                          onMouseUp={() => this.setState({editing: !editing})}>
-                            <input type="text" size={this.props.email.length + 1}></input>
+                            <input type="text" size={this.props.email.length + 1} ref={(input) => {
+                                this.textInput = input;
+                            }}></input>
                             <div className="deleteEmail"></div>
                         </span>
         }
