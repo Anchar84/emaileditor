@@ -4,6 +4,18 @@ import '../styles/EmailDialog.css';
 
 const emailPattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
+function generateRandomString(length) {
+    let randomString = '';
+    let randomAscii;
+    let asciiLow = 97;
+    let asciiHigh = 122;
+    for (let i = 0; i < length; i++) {
+        randomAscii = Math.floor((Math.random() * (asciiHigh - asciiLow)) + asciiLow);
+        randomString += String.fromCharCode(randomAscii)
+    }
+    return randomString
+}
+
 export default class EmailDialog extends Component {
 
     constructor(props) {
@@ -15,7 +27,7 @@ export default class EmailDialog extends Component {
     }
 
     __inputKeyUp(event) {
-        if (event.nativeEvent.keyCode === 13) {
+        if (event.nativeEvent.keyCode === 13 || event.nativeEvent.keyCode === 91) {
             this.__saveEmail(event.currentTarget.value);
             event.currentTarget.value = "";
         }
@@ -25,9 +37,18 @@ export default class EmailDialog extends Component {
         if (!value) {
             return;
         }
+        let values = value.split(",");
+        if (!values.length) {
+            return;
+        }
         let emails = (this.state && this.state.emails) || [];
-        emails.push(value);
+        values.forEach(email => emails.push(email.trim()));
         this.setState({emails});
+    }
+
+    __addRandomEmail() {
+        let rndEmail = `${generateRandomString(10)}@${generateRandomString(5)}.${generateRandomString(2)}`;
+        this.__saveEmail(rndEmail);
     }
 
     render() {
@@ -62,8 +83,8 @@ export default class EmailDialog extends Component {
                     </div>
                 </div>
                 <div className="panel-more">
-                    <button>add random email</button>
-                    <button>get emails count</button>
+                    <button onClick={() => this.__addRandomEmail()}>add random email</button>
+                    <button onClick={() => alert(this.state.emails.length)}>get emails count</button>
                 </div>
             </div>
         );
@@ -92,7 +113,7 @@ class EmailValue extends Component {
     render() {
         let editing = this.state && this.state.editing;
         let value = this.state && this.state.email || this.props.email;
-        let viewStyle = emailPattern.test(value) ? "viewEmail" : "invalid";
+        let viewStyle = emailPattern.test(value.toLocaleString()) ? "viewEmail" : "invalid";
         if (editing) {
             return <span className="editEmail"
                          key={this.props.index}
