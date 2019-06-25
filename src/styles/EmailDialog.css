@@ -4,6 +4,33 @@
     font: 14px OpenSans, Arial, Helvetica, sans-serif;
 }
 
+.panel-more {
+    background-color: white;
+    padding: 50px 50px 40px 50px;
+    font: 14px OpenSans, Arial, Helvetica, sans-serif;
+}
+
+.panel-more button {
+    background-color: #336eea;
+    padding: 14px 24px 16px;
+    min-width: 100px;
+    height: 48px;
+    box-sizing: border-box;
+    display: inline-block;
+    border: 1px solid #336eea;
+    border-radius: 4px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+    line-height: 1;
+    cursor: pointer;
+    vertical-align: middle;
+    margin-right: 24px;
+    font: 14px OpenSans, Arial, Helvetica, sans-serif;
+    color: white;
+}
+
 .panel h2 {
     font-size: 20px;
     font-weight: normal;
@@ -32,6 +59,15 @@
     background-color: rgba(102, 152, 255, 0.2);
     border-radius: 12px;
     color: #4d4d4d;
+}
+
+.panel span.invalid {
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 7px;
+    margin-right: 4px;
+    color: #4d4d4d;
+    border-bottom: 1px dotted red;
 }
 
 .panel span.editEmail {
@@ -65,7 +101,12 @@
     padding-top: 3px;
 }
 
-.panel .deleteEmail::before {
+.panel .deleteEmailView::before {
     content: '\D7';
     margin-left: 9px;
+}
+
+.panel .deleteEmailEdit::before {
+    content: '\D7';
+    margin-left: 2px;
 }
