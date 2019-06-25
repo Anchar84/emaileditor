@@ -15,7 +15,7 @@ export default class EmailDialog extends Component {
     }
 
     __inputKeyUp(event) {
-        if (event.nativeEvent.keyCode == 13) {
+        if (event.nativeEvent.keyCode === 13) {
             this.__saveEmail(event.currentTarget.value);
             event.currentTarget.value = "";
         }
@@ -26,38 +26,44 @@ export default class EmailDialog extends Component {
             return;
         }
         let emails = (this.state && this.state.emails) || [];
-        emails.push(value)
+        emails.push(value);
         this.setState({emails});
     }
 
     render() {
         let emails = (this.state && this.state.emails) || [];
         return (
-            <div className="panel">
-                <h2>Share <b>{this.props.borderName || "Border name"}</b> with other</h2>
-                <div className="emailsField">
-                    {emails.map((email, index) => {
-                        return <EmailValue key={index}
-                                           index={index}
-                                           email={email}
-                                           deleteEmail={() => {
-                                               emails.splice(index, 1);
-                                               this.setState({emails});
-                                           }}
-                                           updateValue={newValue => {
-                                               emails[index] = newValue;
-                                               this.setState({emails});
-                                           }}
+            <div>
+                <div className="panel">
+                    <h2>Share <b>{this.props.borderName || "Border name"}</b> with other</h2>
+                    <div className="emailsField">
+                        {emails.map((email, index) => {
+                            return <EmailValue key={index}
+                                               index={index}
+                                               email={email}
+                                               deleteEmail={() => {
+                                                   emails.splice(index, 1);
+                                                   this.setState({emails});
+                                               }}
+                                               updateValue={newValue => {
+                                                   emails[index] = newValue;
+                                                   this.setState({emails});
+                                               }}
+                            />
+                        })}
+                        <input type="text"
+                               placeholder="add more people..."
+                               onBlur={event => {
+                                   this.__saveEmail(event.currentTarget.value);
+                                   event.currentTarget.value = "";
+                               }}
+                               onKeyUp={event => this.__inputKeyUp(event)}
                         />
-                    })}
-                    <input type="text"
-                           placeholder="add more people..."
-                           onBlur={(event) => {
-                               this.__saveEmail(event.currentTarget.value);
-                               event.currentTarget.value = "";
-                           }}
-                           onKeyUp={(event) => this.__inputKeyUp(event)}
-                    ></input>
+                    </div>
+                </div>
+                <div className="panel-more">
+                    <button>add random email</button>
+                    <button>get emails count</button>
                 </div>
             </div>
         );
@@ -72,7 +78,7 @@ class EmailValue extends Component {
 
     __updateValue(event) {
         let keyCode = event.nativeEvent && event.nativeEvent.keyCode || 0;
-        if (keyCode == 13) {
+        if (keyCode === 13) {
             this.setState({email: event.currentTarget.value, editing: false}, () => this.props.updateValue(this.state.email));
         }
     }
@@ -94,21 +100,20 @@ class EmailValue extends Component {
                             <input type="text"
                                    style={{width: (value.length) * 8 + 'px'}}
                                    value={value}
-                                   onChange={(event) => this.setState({email: event.currentTarget.value})}
-                                   onKeyUp={(event) => this.__updateValue(event)}
-                                   //onBlur={() => this.setState({editing: false}, () => this.props.updateValue(value))}
-                                   //onKeyDown={(event) => {this.nameInput.style.width = ((event.currentTarget.value + 1) * 8) + 'px';}}
+                                   onChange={event => this.setState({email: event.currentTarget.value})}
+                                   onKeyUp={event => this.__updateValue(event)}
+                                   onBlur={() => this.setState({editing: false}, () => this.props.updateValue(value))}
                                    ref={(input) => this.nameInput = input}
-                            >
-                            </input>
-                            <div className="deleteEmail deleteEmailEdit"></div>
+                            />
+
+                            <div className="deleteEmail deleteEmailEdit"/>
                   </span>
         }
         return <span className={viewStyle}
                      key={this.props.index}
                      onClick={() => this.setState({editing: !editing})}>
                      {value}
-            <div className="deleteEmail deleteEmailView" onClick={() => this.props.deleteEmail()}></div>
+                     <div className="deleteEmail deleteEmailView" onClick={() => this.props.deleteEmail()}/>
                </span>
     }
 }
