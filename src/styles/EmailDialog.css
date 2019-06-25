@@ -34,6 +34,15 @@
     color: #4d4d4d;
 }
 
+.panel span.invalid {
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 7px;
+    margin-right: 4px;
+    color: #4d4d4d;
+    border-bottom: 1px dotted red;
+}
+
 .panel span.editEmail {
     display: inline-block;
     padding-left: 10px;
@@ -65,7 +74,12 @@
     padding-top: 3px;
 }
 
-.panel .deleteEmail::before {
+.panel .deleteEmailView::before {
     content: '\D7';
     margin-left: 9px;
+}
+
+.panel .deleteEmailEdit::before {
+    content: '\D7';
+    margin-left: 2px;
 }
